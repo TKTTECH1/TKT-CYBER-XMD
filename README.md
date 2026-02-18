@@ -21,13 +21,13 @@
 
 
 <p align="center">
-<a href="https://github.com/tkttech"><img title="PUBLIC-BOT" src="https://img.shields.io/static/v1?label=Language&message=English&style=square&color=darkpink"></a> &nbsp;
-  <img src="https://komarev.com/ghpvc/?username=tkttech&label=VIEWS&style=square&color=blue" />
+<a href="https://github.com/TKTTECH1"><img title="PUBLIC-BOT" src="https://img.shields.io/static/v1?label=Language&message=English&style=square&color=darkpink"></a> &nbsp;
+  <img src="https://komarev.com/ghpvc/?username=TKTTECH1&label=VIEWS&style=square&color=blue" />
 </p>
 </p> 
 
 <p align="center">
-  <a href="https://github.com/tkttech/TKT-CYBER-XMD"><img title="Release" src="https://img.shields.io/badge/Release-beta%20v5-cyan.svg?style=for-the-badge&logo=aqua" /></a>
+  <a href="https://github.com/TKTTECH1/TKT-CYBER-XMD"><img title="Release" src="https://img.shields.io/badge/Release-beta%20v5-cyan.svg?style=for-the-badge&logo=aqua" /></a>
 </p>
 
 
@@ -39,18 +39,18 @@
 
   
 <a
-href="https://github.com/tkttech/TKT-CYBER-XMD/graphs/commit-activity"><img height="20" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg"></a>&nbsp;&nbsp;
+href="https://github.com/TKTTECH1/TKT-CYBER-XMD/graphs/commit-activity"><img height="20" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg"></a>&nbsp;&nbsp;
 </p>
 <p align='center'>
 
  [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=monospace-ExtraBold&color=blue&lines=𝗙𝗢𝗥𝗞+𝗔𝗡𝗗+𝗦𝗧𝗔𝗥+⭐+𝗥𝗘𝗣𝗢)](https://git.io/typing-svg)
  <p align="lift">
- <a href="https://github.com/tkttech/TKT-CYBER-XMD-V3/fork"><img title="TKT-CYBER-V5" src="https://img.shields.io/badge/FORK-TKT-CYBER V5-h?color=008000&style=for-the-badge&logo=github"></a>
+ <a href="https://github.com/TKTTECH1/TKT-CYBER-XMD/fork"><img title="TKT-CYBER-V3" src="https://img.shields.io/badge/FORK-TKT-CYBER V5-h?color=008000&style=for-the-badge&logo=github"></a>
  
 
-  **⛓️‍💥 NEW SESSION WEB ADDED**
+  **⛓️‍💥 GET TKT-CYBER-XMD PAIR SITE**
   
-  <a href='https://tkt-cyber-pair.onrender.com/' target="_blank">
+  <a href='https://tkt-cyber-cyber-ai-session.onrender.com/' target="_blank">
     <img src='https://img.shields.io/badge/PAIR_CODE-FF0000?style=for-the-badge&logo=matrix&logoColor=white&labelColor=000000'/>
   </a></br>
 
@@ -64,7 +64,7 @@ href="https://github.com/tkttech/TKT-CYBER-XMD/graphs/commit-activity"><img heig
       <td><a href="https://host.talkdrove.com/share-bot/47" target="_blank"><img src="https://img.shields.io/badge/TalkDrove-A52A2A?style=for-the-badge&logo=github&logoColor=white&labelColor=000000"/></a></td>
     </tr>
     <tr>
-      <td><a href="https://app.koyeb.com/services/deploy?type=git&repository=https://github.com/tkttech/TKT-CYBER-XMD" target="_blank"><img src="https://img.shields.io/badge/Koyeb-FF009D?style=for-the-badge&logo=koyeb&logoColor=white&labelColor=000000"/></a></td>
+      <td><a href="https://app.koyeb.com/services/deploy?type=git&repository=https://github.com/TKTTECH1/TKT-CYBER-XMD" target="_blank"><img src="https://img.shields.io/badge/Koyeb-FF009D?style=for-the-badge&logo=koyeb&logoColor=white&labelColor=000000"/></a></td>
       <td><a href="https://railway.app/new" target="_blank"><img src="https://img.shields.io/badge/Railway-FF8700?style=for-the-badge&logo=railway&logoColor=white&labelColor=000000"/></a></td>
     </tr>
     <tr>
