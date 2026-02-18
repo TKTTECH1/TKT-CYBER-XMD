@@ -3,7 +3,7 @@
 <a><img src='https://files.catbox.moe/d622xc.png'/></a>
 
 <p align="center">
-  <a href="https://github.com/tkttech"><img title="Developer" src="https://img.shields.io/badge/Author-TKT-TECH%20MD-FF00FF.svg?style=big-square&logo=github" /></a>
+  <a href="https://github.com/TKTTECH1"><img title="Developer" src="https://img.shields.io/badge/Author-TKT-TECH%20MD-FF00FF.svg?style=big-square&logo=github" /></a>
 </p>
 
 <div align="center">
@@ -17,7 +17,7 @@
 
 ---------
 
- <p align="center"><img src="https://profile-counter.glitch.me/{TAFADZWA-TKT}/count.svg" alt="tkttech:: Visitor's Count" old_src="https://profile-counter.glitch.me/{TAFADZWA-TKT}/count.svg" /></p>
+ <p align="center"><img src="https://profile-counter.glitch.me/{TAFADZWA-TKT}/count.svg" alt="TKTTECH1:: Visitor's Count" old_src="https://profile-counter.glitch.me/{TAFADZWA-TKT}/count.svg" /></p>
 
 
 <p align="center">
