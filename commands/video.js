@@ -25,7 +25,7 @@ async function tryRequest(getter, attempts = 3) {
 }
 
 async function getYupraVideoByUrl(youtubeUrl) {
-    const apiUrl = `https://arslan-apis.vercel.app/download/ytmp4?url=${encodeURIComponent(youtubeUrl)}`;
+    const apiUrl = `https://api.yupra.my.id/api/downloader/ytmp4?url=${encodeURIComponent(youtubeUrl)}`;
     const res = await tryRequest(() => axios.get(apiUrl, AXIOS_DEFAULTS));
     if (res?.data?.success && res?.data?.data?.download_url) {
         return {
@@ -34,7 +34,7 @@ async function getYupraVideoByUrl(youtubeUrl) {
             thumbnail: res.data.data.thumbnail
         };
     }
-    throw new Error('Yupra returned no download');
+    throw new Error('TKT-CYBER-XD returned no download');
 }
 
 async function getOkatsuVideoByUrl(youtubeUrl) {
@@ -51,8 +51,8 @@ async function videoCommand(sock, chatId, message) {
     try {
         const text = message.message?.conversation || message.message?.extendedTextMessage?.text;
         const searchQuery = text.split(' ').slice(1).join(' ').trim();
-
-
+        
+        
         if (!searchQuery) {
             await sock.sendMessage(chatId, { text: 'What video do you want to download?' }, { quoted: message });
             return;
@@ -88,7 +88,7 @@ async function videoCommand(sock, chatId, message) {
                 }, { quoted: message });
             }
         } catch (e) { console.error('[VIDEO] thumb error:', e?.message || e); }
-
+        
 
         // Validate YouTube URL
         let urls = videoUrl.match(/(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch\?v=|v\/|embed\/|shorts\/|playlist\?list=)?)([a-zA-Z0-9_-]{11})/gi);
@@ -110,7 +110,7 @@ async function videoCommand(sock, chatId, message) {
             video: { url: videoData.download },
             mimetype: 'video/mp4',
             fileName: `${videoData.title || videoTitle || 'video'}.mp4`,
-            caption: `*${videoData.title || videoTitle || 'Video'}*\n\n> *_Downloaded by Knight Bot MD_*`
+            caption: `*${videoData.title || videoTitle || 'Video'}*\n\n> *_Downloaded by TKT-CYBER-XD_*`
         }, { quoted: message });
 
 
