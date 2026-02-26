@@ -6,7 +6,7 @@ async function helpCommand(sock, chatId, message) {
     const helpMessage = `
 ━━━━━━━━━━━━━━━━━┈⊷
 |♧ ${settings.botName || '𝐓𝐊𝐓-𝐂𝐘𝐁𝐄𝐑-𝐗𝐌𝐃 '}*  
-|♤ Version: *${settings.version || '1.0.0'}*
+|♤ Version: *${settings.version || '3.5.0'}*
 |◇ by ${settings.botOwner || 'TKT-TECH🇿🇼'}
 |♤ *ℭℜ𝐸𝒜𝒯𝒪𝑅* :𝐃𝐄𝐕 𝐓𝐀𝐅𝐀𝐃𝐙𝐖𝐀-𝐓𝐊𝐓-𝐓𝐄𝐂𝐇
 ━━━━━━━━━━━━━━━━━┈⊷ 
