@@ -8,7 +8,7 @@ async function helpCommand(sock, chatId, message) {
 |♧ ${settings.botName || '𝐓𝐊𝐓-𝐂𝐘𝐁𝐄𝐑-𝐗𝐌𝐃 '}*  
 |♤ Version: *${settings.version || '1.0.0'}*
 |◇ by ${settings.botOwner || 'TKT-TECH🇿🇼'}
-|■ YouTube : ${global.ytch}
+|♤ *ℭℜ𝐸𝒜𝒯𝒪𝑅* :𝐃𝐄𝐕 𝐓𝐀𝐅𝐀𝐃𝐙𝐖𝐀-𝐓𝐊𝐓-𝐓𝐄𝐂𝐇
 ━━━━━━━━━━━━━━━━━┈⊷ 
 ╭━━〔 📌 CORE COMMANDS 〕━━┈⊷
 │  ✪ .menu / .help
