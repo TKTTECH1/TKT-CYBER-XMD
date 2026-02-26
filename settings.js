@@ -1,5 +1,5 @@
 const settings = {
-  packname: 'Dex Bot',
+  packname: 'TKT-TECH',
   author: '‎',
   botName: "𝐓𝐊𝐓-𝐂𝐘𝐁𝐄𝐑-𝐗𝐃",
   botOwner: '𝐃𝐄𝐕 𝐓𝐀𝐅𝐀𝐃𝐙𝐖𝐀-𝐓𝐊𝐓-𝐓𝐄𝐂𝐇', // Your name
