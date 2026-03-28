@@ -1,6 +1,6 @@
 {
-  "name": "knightbot",
-  "version": "1.0.0",
+  "name": "tkt-cyber-xmd",
+  "version": "3.2.0",
   "description": "WhatsApp Bot",
   "main": "index.js",
   "scripts": {
