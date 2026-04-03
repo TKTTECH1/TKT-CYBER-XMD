@@ -4,7 +4,7 @@ const settings = {
   botName: "𝐓𝐊𝐓-𝐂𝐘𝐁𝐄𝐑-𝐗𝐌𝐃",
   botOwner: 'DEV TAFADZWA-TKT', // Your name
   ownerNumber: '263781400473', //Set your number here without + symbol, just add country code & number without any space
-  giphyApiKey: 'qnl7ssQChTdPjsKta2Ax2LMaGXz303tq',
+  giphyApiKey: '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',
   commandMode: "public",
   maxStoreMessages: 20, 
   storeWriteInterval: 10000,
