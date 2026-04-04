@@ -3,11 +3,11 @@ const settings = require("../settings");
 async function aliveCommand(sock, chatId, message) {
     try {
         const message1 = 
-            `*🎧 𝐓𝐊𝐓-𝐂𝐘𝐁𝐄𝐑-𝐗𝐃 is Alive & Kicking! 🎧*\n\n` +
+            `*🎧 𝐓𝐊𝐓-𝐂𝐘𝐁𝐄𝐑-𝐗𝐌𝐃 is Alive & Kicking! 🎧*\n\n` +
             `📌 *Version:* ${settings.version}\n` +
             `📡 *Status:* Online & Ready\n` +
             `🌍 *Mode:* Public\n` +
-            `👨‍💻 *Developer:*𝐓𝐀𝐅𝐀𝐃𝐙𝐖𝐀-𝐓𝐊𝐓#𝐓𝐄𝐂𝐇🇿🇼\n\n` +
+            `👨‍💻 *Developer:*𝐓𝐀𝐅𝐀𝐃𝐙𝐖𝐀-𝐓𝐊𝐓_𝐓𝐄𝐂𝐇🇿🇼*\n\n` +
 
             `┌──────────────────────┐\n` +
             `│      ✨ Features ✨      │\n` +
@@ -19,7 +19,7 @@ async function aliveCommand(sock, chatId, message) {
             `│ • And Many More!     │\n` +
             `└──────────────────────┘\n\n` +
 
-            `💖 *Special TKT-CYBER-XD Collection* 💖\n\n` +
+            `💖 *Special TKT-CYBER-X𝐌D Collection* 💖\n\n` +
 
             `✨ *Best Friend / Bestie* ✨\n` +
             `✩ *"Hazarō aśhantir madhyē tumi āmār ēkmātrō śhantir jāygā.. 🌟\n` +
@@ -77,7 +77,7 @@ async function aliveCommand(sock, chatId, message) {
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363418027651738@newsletter',
-                    newsletterName: 'TKT-CYBER-XD',
+                    newsletterName: 'TKT-CYBER-X𝐌D',
                     serverMessageId: -1
                 }
             }
