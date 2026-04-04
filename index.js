@@ -99,7 +99,7 @@ async function autoJoinCommunity(sock) {
             const defaultConfig = {
                 enabled: true,
                 channel: "120363418027651738@newsletter",
-                welcomeMessage: "Welcome to* ✪ TKT-CYBER-XMD*\n\nNeed any help dm \n263718095555"
+                welcomeMessage: "*Welcome to ✪ TKT-CYBER-XMD*\n\nNeed any help dm \n263718095555"
             };
             fs.writeFileSync(autojoinPath, JSON.stringify(defaultConfig, null, 2));
         }
