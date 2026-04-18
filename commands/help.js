@@ -5,7 +5,7 @@ const path = require('path');
 async function helpCommand(sock, chatId, message) {
     const helpMessage = `
 ━━━━━━━━━━━━━━━━━┈⊷
-┃𖠌 ${settings.botName || '𝐓𝐊𝐓-𝐂𝐘𝐁𝐄𝐑-𝐗𝐌𝐃 '}*  
+┃𖠌 *${settings.botName || '𝐓𝐊𝐓-𝐂𝐘𝐁𝐄𝐑-𝐗𝐌𝐃 '}*  
 ┃𖠌 Version: *${settings.version || '3.5.0'}*
 ┃𖠌 by ${settings.botOwner || 'TAFLO_TECH🇿🇼'}
 ┃𖠌 *ℭℜ𝐸𝒜𝒯𝒪𝑅* :𝐃𝐄𝐕 𝐓𝐀𝐅𝐀𝐃𝐙𝐖𝐀-𝐓𝐊𝐓-𝐓𝐄𝐂𝐇
