@@ -30,9 +30,9 @@ async function pingCommand(sock, chatId, message) {
 
         const botInfo = `
 ┏❒ *𝐓𝐊𝐓-𝐂𝐘𝐁𝐄𝐑-𝐗𝐌𝐃* ❒━━┈⊷
-┃®┃➣ Ping: ${ping} ms
-┃®┃➣ Uptime: ${uptimeFormatted}
-┃®┃➣ Version: v${settings.version}
+┃❍┃➣ Ping: ${ping} ms
+┃❍┃➣ Uptime: ${uptimeFormatted}
+┃❍┃➣ Version: v${settings.version}
 ┗❒❒━━━━━━━━━━━━━━━━━┈⊷
 𝕮𝓡𝓔𝓐𝓣𝓞𝓡 : 𝐓𝐀𝐅𝐀𝐃𝐙𝐖𝐀-𝐓𝐊𝐓`.trim();
 
