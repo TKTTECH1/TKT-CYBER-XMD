@@ -37,14 +37,14 @@ async function getYupraVideoByUrl(youtubeUrl) {
     throw new Error('TKT-CYBER-XD returned no download');
 }
 
-async function getOkatsuVideoByUrl(youtubeUrl) {
-    const apiUrl = `https://okatsu-rolezapiiz.vercel.app/downloader/ytmp4?url=${encodeURIComponent(youtubeUrl)}`;
+async function getMovanestVideoByUrl(youtubeUrl) {
+    const apiUrl = `https:///movanest.xyz/v2/ytmp4?url=${encodeURIComponent(youtubeUrl)}`;
     const res = await tryRequest(() => axios.get(apiUrl, AXIOS_DEFAULTS));
     // shape: { status, creator, url, result: { status, title, mp4 } }
     if (res?.data?.result?.mp4) {
         return { download: res.data.result.mp4, title: res.data.result.title };
     }
-    throw new Error('Okatsu ytmp4 returned no mp4');
+    throw new Error('Movanest ytmp4 returned no mp4');
 }
 
 async function videoCommand(sock, chatId, message) {
@@ -110,7 +110,7 @@ async function videoCommand(sock, chatId, message) {
             video: { url: videoData.download },
             mimetype: 'video/mp4',
             fileName: `${videoData.title || videoTitle || 'video'}.mp4`,
-            caption: `*${videoData.title || videoTitle || 'Video'}*\n\n> *_Downloaded by TKT-CYBER-XD_*`
+            caption: `*${videoData.title || videoTitle || 'Video'}*\n\n> *_Downloaded by TKT-CYBER-XMD_*`
         }, { quoted: message });
 
 
