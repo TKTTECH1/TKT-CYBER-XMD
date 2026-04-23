@@ -37,14 +37,14 @@ async function getYupraVideoByUrl(youtubeUrl) {
     throw new Error('TKT-CYBER-XD returned no download');
 }
 
-async function getMovanestVideoByUrl(youtubeUrl) {
+async function getOkastuVideoByUrl(youtubeUrl) {
     const apiUrl = `https:///movanest.xyz/v2/ytmp4?url=${encodeURIComponent(youtubeUrl)}`;
     const res = await tryRequest(() => axios.get(apiUrl, AXIOS_DEFAULTS));
     // shape: { status, creator, url, result: { status, title, mp4 } }
     if (res?.data?.result?.mp4) {
         return { download: res.data.result.mp4, title: res.data.result.title };
     }
-    throw new Error('Movanest ytmp4 returned no mp4');
+    throw new Error('Okastu ytmp4 returned no mp4');
 }
 
 async function videoCommand(sock, chatId, message) {
