@@ -1,248 +1,175 @@
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
-
-async function facebookCommand(sock, chatId, message) {
-    try {
-        const text = message.message?.conversation || message.message?.extendedTextMessage?.text;
-        const url = text.split(' ').slice(1).join(' ').trim();
-        
-        if (!url) {
-            return await sock.sendMessage(chatId, { 
-                text: "Please provide a Facebook video URL.\nExample: .fb https://www.facebook.com/..."
-            }, { quoted: message });
-        }
-
-        // Validate Facebook URL
-        if (!url.includes('facebook.com')) {
-            return await sock.sendMessage(chatId, { 
-                text: "That is not a Facebook link."
-            }, { quoted: message });
-        }
-
-        // Send loading reaction
-        await sock.sendMessage(chatId, {
-            react: { text: '🔄', key: message.key }
-        });
-
-        // Resolve share/short URLs to their final destination first
-        let resolvedUrl = url;
-        try {
-            const res = await axios.get(url, { timeout: 20000, maxRedirects: 10, headers: { 'User-Agent': 'Mozilla/5.0' } });
-            const possible = res?.request?.res?.responseUrl;
-            if (possible && typeof possible === 'string') {
-                resolvedUrl = possible;
-            }
-        } catch {
-            // ignore resolution errors; use original url
-        }
-
-        // Use Hanggts API
-        async function fetchFromApi(u) {
-            const apiUrl = `https://arslan-apis.vercel.app/download/fbdown?url=${encodeURIComponent(u)}`;
-            
-            try {
-                const response = await axios.get(apiUrl, {
-                    timeout: 20000,
-                    headers: {
-                        'accept': '*/*',
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-                    },
-                    maxRedirects: 5,
-                    validateStatus: s => s >= 200 && s < 500
-                });
-                
-                if (response.data) {
-                    // Accept response if status is true, or if response has data/result/url fields
-                    if (response.data.status === true || 
-                        response.data.result || 
-                        response.data.data || 
-                        response.data.url || 
-                        response.data.download || 
-                        response.data.video) {
-                        return { response, apiName: 'Hanggts API' };
-                    }
-                }
-            } catch (error) {
-                console.error(`Hanggts API failed: ${error.message}`);
-            }
-            throw new Error('Hanggts API failed');
-        }
-
-        // Try resolved URL, then fallback to original URL
-        let apiResult;
-        try {
-            apiResult = await fetchFromApi(resolvedUrl);
-        } catch {
-            apiResult = await fetchFromApi(url);
-        }
-
-        const response = apiResult.response;
-        const apiName = apiResult.apiName;
-        const data = response.data;
-
-        let fbvid = null;
-        let title = null;
-
-        // Handle Hanggts API response format
-        // Try parsing even if status is not explicitly true
-        if (data) {
-            // Try different possible response structures
-            if (data.result) {
-                // Hanggts API format: data.result.media.video_hd or video_sd
-                if (data.result.media) {
-                    // Prefer HD, fallback to SD
-                    fbvid = data.result.media.video_hd || data.result.media.video_sd;
-                    title = data.result.info?.title || data.result.title || data.title || "Facebook Video";
-                }
-                // Check if result is an object with url
-                else if (typeof data.result === 'object' && data.result.url) {
-                    fbvid = data.result.url;
-                    title = data.result.title || data.result.caption || data.title || "Facebook Video";
-                } 
-                // Check if result is a string (direct URL)
-                else if (typeof data.result === 'string' && data.result.startsWith('http')) {
-                    fbvid = data.result;
-                    title = data.title || "Facebook Video";
-                }
-                // Check if result has download or video property
-                else if (data.result.download) {
-                    fbvid = data.result.download;
-                    title = data.result.title || data.title || "Facebook Video";
-                } else if (data.result.video) {
-                    fbvid = data.result.video;
-                    title = data.result.title || data.title || "Facebook Video";
-                }
-            }
-            
-            if (!fbvid && data.data) {
-                if (typeof data.data === 'object' && data.data.url) {
-                    fbvid = data.data.url;
-                    title = data.data.title || data.data.caption || data.title || "Facebook Video";
-                } else if (typeof data.data === 'string' && data.data.startsWith('http')) {
-                    fbvid = data.data;
-                    title = data.title || "Facebook Video";
-                } else if (Array.isArray(data.data) && data.data.length > 0) {
-                    // Array format - find best quality
-                    const hdVideo = data.data.find(item => (item.quality === 'HD' || item.quality === 'high') && (item.format === 'mp4' || !item.format));
-                    const sdVideo = data.data.find(item => (item.quality === 'SD' || item.quality === 'low') && (item.format === 'mp4' || !item.format));
-                    fbvid = hdVideo?.url || sdVideo?.url || data.data[0]?.url;
-                    title = hdVideo?.title || sdVideo?.title || data.data[0]?.title || data.title || "Facebook Video";
-                } else if (data.data.download) {
-                    fbvid = data.data.download;
-                    title = data.data.title || data.title || "Facebook Video";
-                } else if (data.data.video) {
-                    fbvid = data.data.video;
-                    title = data.data.title || data.title || "Facebook Video";
-                }
-            }
-            
-            if (!fbvid && data.url) {
-                fbvid = data.url;
-                title = data.title || data.caption || "Facebook Video";
-            }
-            
-            if (!fbvid && data.download) {
-                fbvid = data.download;
-                title = data.title || "Facebook Video";
-            }
-            
-            if (!fbvid && data.video) {
-                if (typeof data.video === 'string') {
-                    fbvid = data.video;
-                } else if (data.video.url) {
-                    fbvid = data.video.url;
-                }
-                title = data.title || data.video.title || "Facebook Video";
-            }
-        }
-
-        if (!fbvid) {
-            return await sock.sendMessage(chatId, { 
-                text: '❌ Failed to get video URL from Facebook.\n\nPossible reasons:\n• Video is private or deleted\n• Link is invalid\n• Video is not available for download\n\nPlease try a different Facebook video link.'
-            }, { quoted: message });
-        }
-
-        // Try URL method first (more reliable)
-        try {
-            const caption = title ? `𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐞𝐝 𝐁𝐲 *TKT_CYBER-XMD*\n\n📝 Title: ${title}` : "𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐞𝐝 𝐁𝐲 *TKT-CYBER-XMD*";
-            
-            await sock.sendMessage(chatId, {
-                video: { url: fbvid },
-                mimetype: "video/mp4",
-                caption: caption
-            }, { quoted: message });
-            
-            return;
-        } catch (urlError) {
-            console.error(`URL method failed: ${urlError.message}`);
-            
-            // Fallback to buffer method
-            try {
-                // Create temp directory if it doesn't exist
-                const tmpDir = path.join(process.cwd(), 'tmp');
-                if (!fs.existsSync(tmpDir)) {
-                    fs.mkdirSync(tmpDir, { recursive: true });
-                }
-
-                // Generate temp file path
-                const tempFile = path.join(tmpDir, `fb_${Date.now()}.mp4`);
-
-                // Download the video
-                const videoResponse = await axios({
-                    method: 'GET',
-                    url: fbvid,
-                    responseType: 'stream',
-                    timeout: 60000,
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                        'Accept': 'video/mp4,video/*;q=0.9,*/*;q=0.8',
-                        'Accept-Language': 'en-US,en;q=0.5',
-                        'Referer': 'https://www.facebook.com/'
-                    }
-                });
-
-                const writer = fs.createWriteStream(tempFile);
-                videoResponse.data.pipe(writer);
-
-                await new Promise((resolve, reject) => {
-                    writer.on('finish', resolve);
-                    writer.on('error', reject);
-                });
-
-                // Check if file was downloaded successfully
-                if (!fs.existsSync(tempFile) || fs.statSync(tempFile).size === 0) {
-                    throw new Error('Failed to download video');
-                }
-
-                // Send the video
-                const caption = title ? `𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐞𝐝 𝐁𝐲 *TKT-CYBER-Xmd*\n\n📝 Title: ${title}` : "𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐞𝐝 𝐁𝐲 *TKT-CYBER-XMD*";
-                
-                await sock.sendMessage(chatId, {
-                    video: { url: tempFile },
-                    mimetype: "video/mp4",
-                    caption: caption
-                }, { quoted: message });
-
-                // Clean up temp file
-                try {
-                    fs.unlinkSync(tempFile);
-                } catch (err) {
-                    console.error('Error cleaning up temp file:', err);
-                }
-                return;
-            } catch (bufferError) {
-                console.error(`Buffer method also failed: ${bufferError.message}`);
-                throw new Error('Both URL and buffer methods failed');
-            }
-        }
-
-    } catch (error) {
-        console.error('Error in Facebook command:', error);
-        await sock.sendMessage(chatId, { 
-            text: "An error occurred. API might be down. Error: " + error.message
-        }, { quoted: message });
+case 'fb':
+case 'fbdl':
+case 'facebook':
+case 'facebook': {
+    const axios = require('axios');
+    // get message text
+    const q = msg.message?.conversation ||
+        msg.message?.extendedTextMessage?.text ||
+        msg.message?.imageMessage?.caption ||
+        msg.message?.videoMessage?.caption || '';
+    if (!q || q.trim() === '') {
+        await socket.sendMessage(sender, { text: '*`Need FB Video URL`*' });
+        break;
     }
-}
+    // load bot name
+    const sanitized = (number || '').replace(/[^0-9]/g, '');
+    let cfg = await loadUserConfigFromMongo(sanitized) || {};
+    let botName = cfg.botName || 'TKT-XMD'    // fake contact for quoted card
+    const botMention = {
+        key: {
+            remoteJid: "status@broadcast",
+            participant: "0@s.whatsapp.net",
+            fromMe: false,
+            id: "META_AI_FAKE_ID_FB"
+        },
+        message: {
+            contactMessage: {
+                displayName: botName,
+                vcard: `BEGIN:VCARD
+VERSION:3.0
+N:${botName};;;;
+FN:${botName}
+ORG:Meta Platforms
+TEL;type=CELL;type=VOICE;waid=13135550002:+1 313 555 0002
+END:VCARD`
+            }
+        }
+    };
+    try {
+        // call fbdown API
+        const apiUrl = `https:///movanest.xyz/v2/fbdown?url=${encodeURIComponent(q.trim())}`;
+        const apiRes = await axios.get(apiUrl, { 
+            timeout: 30000,
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            }
+        }).then(r => r.data).catch(e => null);
+        console.log('FB API Response:', apiRes); // Log to debug
+        if (!apiRes || !apiRes.status || apiRes.count !== 1 || !apiRes.results || !apiRes.results.length) {
+            await socket.sendMessage(sender, { text: '*`ERROR...!`*' }, { quoted: botMention });
+            break;
+        }
+        const result = apiRes.results[0];
+        if (!result.normalQualityLink) {
+            await socket.sendMessage(sender, { text: '*`No download link available`*' }, { quoted: botMention });
+            break;
+        }
+        // Normalize
+        const title = result.title && result.title !== 'No video title' ? result.title : 'Facebook Video';
+        const thumb = result.thumbnail || null;
+        const duration = result.duration || 'N/A';
+        const normalUrl = result.normalQualityLink;
+        const hdUrl = result.hdQualityLink;
+        const normalFilename = `${title} (Normal).mp4`;
+        const hdFilename = `${title} (HD).mp4`;
+        const caption = `
+\`\✨ 𝐓𝐀𝐅𝐀𝐃𝐙𝐖𝐀-𝐌𝐈𝐍𝐈-𝗙𝗕 𝗗𝗢𝗪𝗡𝗟𝗢𝗗𝗘𝗥 ✨\`\
 
+> 🎵 *Title ┆* ${title}
+
+> ⏱️ *Duration ┆* ${duration || 'N/A'}
+
+> 🔊 *Quality ┆* Normal | HD
+
+> 🔗 *Source ┆* ${q}
+
+
+*💐 Reply Number Your Format*
+*╭━━━━━❮ 360𝐩 ❯━━━━━━━➤*
+*┣━➤ 1️⃣. 📄 MP4 as Document*
+*┣━➤ 2️⃣. 🎧 MP4 as Audio*
+*╰━━━━━━━━━━━━━━━━━━➤*
+*╭━━━━━━❮ 𝐇𝐃 ❯━━━━━━━➤*
+*┣━➤ 3️⃣. 📄 MP4 as Document*
+*┣━➤ 4️⃣. 🎧 MP4 as Audio*
+*╰━━━━━━━━━━━━━━━━━━➤*
+
+> 🧑‍💻 POWERED BY ${botName}`;
+        // send thumbnail card if available
+        const sendOpts = { quoted: botMention };
+        const media = thumb ? { image: { url: thumb }, caption } : { text: caption };
+        const resMsg = await socket.sendMessage(sender, media, sendOpts);
+        // handler waits for quoted reply from same sender
+        const handler = async (msgUpdate) => {
+            try {
+                const received = msgUpdate.messages && msgUpdate.messages[0];
+                if (!received) return;
+                const fromId = received.key.remoteJid || received.key.participant || (received.key.fromMe && sender);
+                if (fromId !== sender) return;
+                const text = received.message?.conversation || received.message?.extendedTextMessage?.text;
+                if (!text) return;
+                // ensure they quoted our card
+                const quotedId = received.message?.extendedTextMessage?.contextInfo?.stanzaId ||
+                    received.message?.extendedTextMessage?.contextInfo?.quotedMessage?.key?.id;
+                if (!quotedId || quotedId !== resMsg.key.id) return;
+                const choice = text.toString().trim().split(/\s+/)[0];
+                await socket.sendMessage(sender, { react: { text: "📥", key: received.key } });
+                let downloadUrl, filename, isHd = false;
+                switch (choice) {
+                    case "1":
+                        downloadUrl = normalUrl;
+                        filename = normalFilename;
+                        break;
+                    case "2":
+                        downloadUrl = normalUrl;
+                        filename = normalFilename;
+                        break;
+                    case "3":
+                        if (!hdUrl) {
+                            await socket.sendMessage(sender, { text: "*HD not available. Use 1 or 2.*" }, { quoted: received });
+                            return;
+                        }
+                        downloadUrl = hdUrl;
+                        filename = hdFilename;
+                        isHd = true;
+                        break;
+                    case "4":
+                        if (!hdUrl) {
+                            await socket.sendMessage(sender, { text: "*HD not available. Use 1 or 2.*" }, { quoted: received });
+                            return;
+                        }
+                        downloadUrl = hdUrl;
+                        filename = hdFilename;
+                        isHd = true;
+                        break;
+                    default:
+                        await socket.sendMessage(sender, { text: "*Invalid option ❗*" }, { quoted: received });
+                        return;
+                }
+                if (choice === "1" || choice === "3") {
+                    await socket.sendMessage(sender, {
+                        document: { url: downloadUrl },
+                        mimetype: "video/mp4",
+                        fileName: filename
+                    }, { quoted: received });
+                } else {
+                    await socket.sendMessage(sender, {
+                        video: { url: downloadUrl },
+                        mimetype: "video/mp4"
+                    }, { quoted: received });
+                }
+                // cleanup listener after successful send
+                socket.ev.off('messages.upsert', handler);
+            } catch (err) {
+                console.error("Facebook handler error:", err);
+                try { socket.ev.off('messages.upsert', handler); } catch (e) {}
+            }
+        };
+        socket.ev.on('messages.upsert', handler);
+        // auto-remove handler after 60s
+        setTimeout(() => {
+            try { socket.ev.off('messages.upsert', handler); } catch (e) {}
+        }, 60 * 1000);
+        // react to original command
+        await socket.sendMessage(sender, { react: { text: '✨', key: msg.key } });
+    } catch (err) {
+        console.error('Facebook case error:', err);
+        await socket.sendMessage(sender, { text: "*`Error occurred while processing Facebook request`*" }, { quoted: botMention });
+    }
+    break;
+        }
 module.exports = facebookCommand; 
