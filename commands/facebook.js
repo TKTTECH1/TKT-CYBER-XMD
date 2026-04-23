@@ -39,7 +39,7 @@ async function facebookCommand(sock, chatId, message) {
 
         // Use Hanggts API
         async function fetchFromApi(u) {
-            const apiUrl = `https:///movanest.xyz/v2/fbdown?url=${encodeURIComponent(u)}`;
+            const apiUrl = `https://suhas-bro-api.vercel.app/download/fbdown?url=${encodeURIComponent(u)}`;
             
             try {
                 const response = await axios.get(apiUrl, {
