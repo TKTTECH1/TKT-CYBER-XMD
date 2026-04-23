@@ -58,8 +58,8 @@ async function tiktokCommand(sock, chatId, message) {
         });
 
         try {
-            // Use only Siputzx API
-            const apiUrl = `https://api.siputzx.my.id/api/d/tiktok?url=${encodeURIComponent(url)}`;
+            // Use only Nexoracle API
+            const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=${TIKTOK_API_KEY}&url=${encodeURIComponent(url)}`;
 
 
 
