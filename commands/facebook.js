@@ -1,11 +1,6 @@
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
-case 'fb':
-case 'fbdl':
-case 'facebook':
-case 'facebook': {
-    const axios = require('axios');
     // get message text
     const q = msg.message?.conversation ||
         msg.message?.extendedTextMessage?.text ||
