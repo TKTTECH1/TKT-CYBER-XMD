@@ -90,7 +90,7 @@ async function songCommand(sock, chatId, message) {
         // Inform user
         await sock.sendMessage(chatId, {
             image: { url: video.thumbnail },
-            caption: `🎵 Downloading: *${video.title}*\n⏱ Duration: ${video.timestamp}`
+            caption: `🎼 Downloading: *${video.title}*\n⏱ Duration: ${video.timestamp}`
         }, { quoted: message });
 
 		// Try multiple APIs with fallback chain: EliteProTech -> Yupra -> Okatsu
