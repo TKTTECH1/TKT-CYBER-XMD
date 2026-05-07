@@ -1,15 +1,3 @@
-/**
- * TKT-CYBER-XMD A WhatsApp Bot
- * Copyright (c) 2026 TAFADZWA TKT
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the MIT License.
- * 
- * Credits:
- * - Baileys Library by @adiwajshing
- * - Pair Code implementation inspired by TechGod143 & DGXEON
- */
-
 require('\x2e\x2f\x73\x65\x74\x74\x69\x6e\x67\x73')
 const { Boom } = require('\x40\x68\x61\x70\x69\x2f\x62\x6f\x6f\x6d')
 const _SZZVxi = require('\x66\x73')
