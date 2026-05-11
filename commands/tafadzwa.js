@@ -312,7 +312,7 @@ I҉T҉S҉ 🅣🅚🅣-🅒🅨🅑🅔🅡-🅧🅜🅓
 «ᴛᴇʟᴇɢʀᴀᴍ»=https://t.me/tktcybertech /https://t.me/+HxfKr3xq6OM1ZGU8`;
 
     try {
-        const imagePath = path.join(__dirname, '../assets/bot_image.jpeg');
+        const imagePath = path.join(__dirname, '../assets/bot_image.jpg');
 
         const messageOptions = {
             contextInfo: {
