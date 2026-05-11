@@ -40,7 +40,7 @@ async function helpCommand(sock, chatId, message) {
 ║ ❍ *ᴜᴘᴛɪᴍᴇ:* ${uptime}
 ║ ❍ *ʀᴀᴍ:* ${ramUsage}
 ╚══════════════════❒
-
+I҉T҉S҉ 🅣🅚🅣-🅒🅨🅑🅔🅡-🅧🅜🅓
 ╔══════════════════❒
 ║ ❍ *ɢᴇɴᴇʀᴀʟ* ❍
 ║ ❍ .ʜᴇʟᴘ ᴏʀ .ᴍᴇɴᴜ
