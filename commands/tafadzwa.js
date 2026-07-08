@@ -308,8 +308,7 @@ I҉T҉S҉ 🅣🅚🅣-🅒🅨🅑🅔🅡-🅧🅜🅓
 ║ ❍ .sᴇᴛᴍᴇɴᴛɪᴏɴ
 ║ ❍ .ᴍᴇɴᴛɪᴏɴ <ᴏɴ/ᴏғғ>
 ╚══════════════════❒
-ꜰᴏʟʟᴏᴡ ᴜꜱ ᴏɴ: «ᴡʜᴀᴛꜱᴀᴘᴘ»= https://whatsapp.com/channel/0029Vb5vbMM0LKZJi9k4ED1a
-«ᴛᴇʟᴇɢʀᴀᴍ»=https://t.me/tktcybertech /https://t.me/+HxfKr3xq6OM1ZGU8`;
+ꜰᴏʟʟᴏᴡ @devtafadzwatkt`;
 
     try {
         const imagePath = path.join(__dirname, '../assets/bot_image.jpg');
